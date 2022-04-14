@@ -1,10 +1,10 @@
-package com.bangkit.intermediate.dicodingstoryapp
+package com.bangkit.intermediate.dicodingstoryapp.ui.auth.splashscreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import com.bangkit.intermediate.dicodingstoryapp.ui.auth.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

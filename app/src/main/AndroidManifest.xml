@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingStoryApp" >
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.auth.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".ui.auth.splashscreen.SplashScreenActivity"
             android:theme="@style/Theme.SplashScreen"
             android:exported="true" >
             <intent-filter>
