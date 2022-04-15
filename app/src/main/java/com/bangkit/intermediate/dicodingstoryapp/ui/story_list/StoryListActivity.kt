@@ -1,9 +1,8 @@
-package com.bangkit.intermediate.dicodingstoryapp.ui.storylist
+package com.bangkit.intermediate.dicodingstoryapp.ui.story_list
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.bangkit.intermediate.dicodingstoryapp.R

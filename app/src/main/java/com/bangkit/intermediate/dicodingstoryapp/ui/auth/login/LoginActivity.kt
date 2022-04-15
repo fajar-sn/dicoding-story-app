@@ -6,15 +6,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityLoginBinding
-import com.bangkit.intermediate.dicodingstoryapp.ui.BaseActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.register.RegisterActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomEmailEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomPasswordEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.FormValidator
-import com.bangkit.intermediate.dicodingstoryapp.ui.storylist.StoryListActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.story_list.StoryListActivity
 
 class LoginActivity : BaseActivity() {
     private lateinit var emailEditText: CustomEmailEditText

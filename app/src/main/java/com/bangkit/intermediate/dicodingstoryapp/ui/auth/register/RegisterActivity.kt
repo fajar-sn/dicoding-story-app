@@ -3,25 +3,36 @@ package com.bangkit.intermediate.dicodingstoryapp.ui.auth.register
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.activity.viewModels
+import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.RegisterRequest
+import com.bangkit.intermediate.dicodingstoryapp.data.repository.Result
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityRegisterBinding
-import com.bangkit.intermediate.dicodingstoryapp.ui.BaseActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.auth.AuthViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomEmailEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomPasswordEditText
+import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.FormValidator
+import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
 
 class RegisterActivity : BaseActivity() {
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: CustomEmailEditText
     private lateinit var passwordEditText: CustomPasswordEditText
     private lateinit var registerButton: Button
+    private lateinit var progressBar: ProgressBar
+    private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupView(binding)
+        setupViewModel()
         setupAction()
     }
 
@@ -31,12 +42,15 @@ class RegisterActivity : BaseActivity() {
         emailEditText = binding.emailEditText
         passwordEditText = binding.passwordEditText
         registerButton = binding.registerButton
+        progressBar = binding.progressBar
         supportActionBar?.hide()
         setRegisterButtonEnable()
     }
 
     override fun setupViewModel() {
-        TODO("Not yet implemented")
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel: AuthViewModel by viewModels { factory }
+        this.viewModel = viewModel
     }
 
     override fun setupAction() {
@@ -69,6 +83,37 @@ class RegisterActivity : BaseActivity() {
                 setRegisterButtonEnable()
             }
         })
+
+        registerButton.setOnClickListener {
+            val name = nameEditText.text.trim().toString()
+            val email = emailEditText.text?.trim().toString()
+            val password = passwordEditText.text?.trim().toString()
+            val request = RegisterRequest(name, email, password)
+            viewModel.register(request).observe(this) { result ->
+                if (result == null) return@observe
+
+                when (result) {
+                    is Result.Loading -> {
+                        registerButton.isEnabled = false
+                        progressBar.visibility = View.VISIBLE
+                    }
+                    is Result.Success -> {
+                        registerButton.isEnabled = true
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(this, result.data.message, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    is Result.Error -> {
+                        registerButton.isEnabled = true
+                        progressBar.visibility = View.GONE
+
+                        Toast.makeText(this,
+                            "Something went wrong. ${result.error}",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun setRegisterButtonEnable() {

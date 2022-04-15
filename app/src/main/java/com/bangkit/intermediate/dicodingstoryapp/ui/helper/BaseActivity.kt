@@ -1,4 +1,4 @@
-package com.bangkit.intermediate.dicodingstoryapp.ui
+package com.bangkit.intermediate.dicodingstoryapp.ui.helper
 
 import androidx.appcompat.app.AppCompatActivity
 
