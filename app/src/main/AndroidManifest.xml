@@ -10,8 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingStoryApp">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".ui.storylist.StoryListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.splashscreen.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
