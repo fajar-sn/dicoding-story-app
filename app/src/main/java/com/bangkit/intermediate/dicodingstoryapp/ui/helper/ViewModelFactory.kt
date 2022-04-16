@@ -13,7 +13,7 @@ import java.lang.IllegalArgumentException
 class ViewModelFactory private constructor(private val repository: BaseRepository) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AuthViewModel::class.java))
-            return AuthViewModel(repository as AuthRepository) as T
+            return AuthViewModel.getInstance(repository as AuthRepository) as T
 
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
@@ -23,7 +23,7 @@ class ViewModelFactory private constructor(private val repository: BaseRepositor
         private var instance: ViewModelFactory? = null
 
         fun getInstance(context: Context): ViewModelFactory = instance ?: synchronized(this) {
-            instance ?: ViewModelFactory(Injection.provideInjection(context))
+            instance ?: ViewModelFactory(Injection.provideInjection())
         }.also { instance = it }
     }
 }

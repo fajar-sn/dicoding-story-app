@@ -89,27 +89,17 @@ class RegisterActivity : BaseActivity() {
             val email = emailEditText.text?.trim().toString()
             val password = passwordEditText.text?.trim().toString()
             val request = RegisterRequest(name, email, password)
+
             viewModel.register(request).observe(this) { result ->
                 if (result == null) return@observe
 
                 when (result) {
-                    is Result.Loading -> {
-                        registerButton.isEnabled = false
-                        progressBar.visibility = View.VISIBLE
-                    }
+                    is Result.Loading -> showLoading(registerButton, progressBar)
+                    is Result.Error -> showError(registerButton, progressBar, result.error)
                     is Result.Success -> {
-                        registerButton.isEnabled = true
-                        progressBar.visibility = View.GONE
+                        finishLoading(registerButton, progressBar)
                         Toast.makeText(this, result.data.message, Toast.LENGTH_SHORT).show()
                         finish()
-                    }
-                    is Result.Error -> {
-                        registerButton.isEnabled = true
-                        progressBar.visibility = View.GONE
-
-                        Toast.makeText(this,
-                            "Something went wrong. ${result.error}",
-                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }
