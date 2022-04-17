@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.viewbinding.ViewBinding
 
 interface BaseView {
     fun setupView(viewBinding: Any)
@@ -58,6 +59,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
 abstract class BaseFragment : Fragment(), BaseView {
     protected lateinit var viewModel: ViewModel
+    protected var viewBinding: ViewBinding? = null
+    protected val binding get() = viewBinding!!
 
     protected fun showLoading(button: Button, progressBar: ProgressBar) =
         ViewHelper.showLoading(button, progressBar)
