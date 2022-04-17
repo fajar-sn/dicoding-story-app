@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.bangkit.intermediate.dicodingstoryapp.R
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityStoryListBinding
-import com.bangkit.intermediate.dicodingstoryapp.ui.settings.SettingsActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.auth.settings.SettingsActivity
 
 class StoryListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

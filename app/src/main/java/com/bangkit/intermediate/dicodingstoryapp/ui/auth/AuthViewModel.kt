@@ -1,21 +1,26 @@
 package com.bangkit.intermediate.dicodingstoryapp.ui.auth
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.LoginRequest
-import com.bangkit.intermediate.dicodingstoryapp.data.repository.AuthRepository
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.RegisterRequest
+import com.bangkit.intermediate.dicodingstoryapp.data.repository.AuthRepository
+import kotlinx.coroutines.launch
 
-class AuthViewModel private constructor(private val authRepository: AuthRepository) : ViewModel() {
-    fun register(request: RegisterRequest) = authRepository.register(request)
+open class AuthViewModel : ViewModel()
 
-    fun login(request: LoginRequest) = authRepository.login(request)
+class SplashScreenViewModel(private val repository: AuthRepository) : AuthViewModel() {
+    fun getUserToken() = repository.getUserToken()
+}
 
-    companion object {
-        @Volatile
-        private var instance: AuthViewModel? = null
+class RegisterViewModel(private val repository: AuthRepository) : AuthViewModel() {
+    fun register(request: RegisterRequest) = repository.register(request)
+}
 
-        fun getInstance(authRepository: AuthRepository) = instance ?: synchronized(this) {
-            instance ?: AuthViewModel(authRepository)
-        }.also { instance = it }
-    }
+open class SettingsViewModel(private val repository: AuthRepository) : AuthViewModel() {
+    fun saveUserToken(token: String) = viewModelScope.launch { repository.saveUserToken(token) }
+}
+
+class LoginViewModel(private val repository: AuthRepository) : SettingsViewModel(repository) {
+    fun login(request: LoginRequest) = repository.login(request)
 }

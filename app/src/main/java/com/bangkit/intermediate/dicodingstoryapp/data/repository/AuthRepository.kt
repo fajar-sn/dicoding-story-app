@@ -1,18 +1,18 @@
 package com.bangkit.intermediate.dicodingstoryapp.data.repository
 
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import com.bangkit.intermediate.dicodingstoryapp.data.local.UserPreferences
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.LoginRequest
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.RegisterRequest
-import com.bangkit.intermediate.dicodingstoryapp.data.remote.response.RegisterResponse
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.retrofit.ApiService
 import retrofit2.HttpException
-import java.lang.Exception
 
-class AuthRepository private constructor(private val apiService: ApiService) : BaseRepository() {
-//    private val result = MediatorLiveData<Result<RegisterResponse>>()
-
+class AuthRepository private constructor(
+    private val apiService: ApiService,
+    private val preferences: UserPreferences
+) : BaseRepository() {
     fun register(request: RegisterRequest) = liveData {
         emit(Result.Loading)
 
@@ -38,12 +38,16 @@ class AuthRepository private constructor(private val apiService: ApiService) : B
         }
     }
 
+    fun getUserToken() = preferences.getUserToken().asLiveData()
+
+    suspend fun saveUserToken(token: String) { preferences.saveUserToken(token) }
+
     companion object {
         @Volatile
         private var instance: AuthRepository? = null
 
-        fun getInstance(apiService: ApiService) : AuthRepository = instance ?: synchronized(this) {
-            instance ?: AuthRepository(apiService)
+        fun getInstance(apiService: ApiService, preferences: UserPreferences) : AuthRepository = instance ?: synchronized(this) {
+            instance ?: AuthRepository(apiService, preferences)
         }.also { instance = it }
     }
 }

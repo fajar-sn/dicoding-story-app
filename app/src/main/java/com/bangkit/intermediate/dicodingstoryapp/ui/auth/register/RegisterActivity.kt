@@ -3,7 +3,6 @@ package com.bangkit.intermediate.dicodingstoryapp.ui.auth.register
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -12,7 +11,7 @@ import androidx.activity.viewModels
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.RegisterRequest
 import com.bangkit.intermediate.dicodingstoryapp.data.repository.Result
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityRegisterBinding
-import com.bangkit.intermediate.dicodingstoryapp.ui.auth.AuthViewModel
+import com.bangkit.intermediate.dicodingstoryapp.ui.auth.RegisterViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomEmailEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomPasswordEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
@@ -25,7 +24,6 @@ class RegisterActivity : BaseActivity() {
     private lateinit var passwordEditText: CustomPasswordEditText
     private lateinit var registerButton: Button
     private lateinit var progressBar: ProgressBar
-    private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +47,7 @@ class RegisterActivity : BaseActivity() {
 
     override fun setupViewModel() {
         val factory = ViewModelFactory.getInstance(this)
-        val viewModel: AuthViewModel by viewModels { factory }
+        val viewModel: RegisterViewModel by viewModels { factory }
         this.viewModel = viewModel
     }
 
@@ -90,7 +88,7 @@ class RegisterActivity : BaseActivity() {
             val password = passwordEditText.text?.trim().toString()
             val request = RegisterRequest(name, email, password)
 
-            viewModel.register(request).observe(this) { result ->
+            (viewModel as RegisterViewModel).register(request).observe(this) { result ->
                 if (result == null) return@observe
 
                 when (result) {

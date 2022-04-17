@@ -12,9 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingStoryApp">
         <activity
-            android:name=".ui.settings.SettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_settings" />
+            android:name=".ui.auth.settings.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.story_list.StoryListActivity"
             android:exported="false" />
@@ -25,7 +24,7 @@
             android:name=".ui.auth.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.splashscreen.SplashScreenActivity"
+            android:name=".ui.auth.splash_screen.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.SplashScreen">
             <intent-filter>
