@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bangkit.intermediate.dicodingstoryapp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,11 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingStoryApp">
         <activity
-            android:name=".ui.settings.SettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_settings" />
+            android:name=".ui.auth.settings.SettingsActivity"
+            android:exported="false" />
         <activity
-            android:name=".ui.storylist.StoryListActivity"
+            android:name=".ui.story_list.StoryListActivity"
             android:exported="false" />
         <activity
             android:name=".ui.auth.register.RegisterActivity"
@@ -23,7 +24,7 @@
             android:name=".ui.auth.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.auth.splashscreen.SplashScreenActivity"
+            android:name=".ui.auth.splash_screen.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.SplashScreen">
             <intent-filter>
