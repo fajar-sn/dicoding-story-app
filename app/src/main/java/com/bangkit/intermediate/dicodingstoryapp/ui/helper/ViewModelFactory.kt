@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.intermediate.dicodingstoryapp.data.repository.AuthRepository
 import com.bangkit.intermediate.dicodingstoryapp.data.repository.BaseRepository
+import com.bangkit.intermediate.dicodingstoryapp.data.repository.StoryRepository
 import com.bangkit.intermediate.dicodingstoryapp.di.Injection
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.LoginViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.RegisterViewModel
+import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SettingsViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SplashScreenViewModel
+import com.bangkit.intermediate.dicodingstoryapp.ui.story_list.StoryListViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(
@@ -21,6 +24,10 @@ class ViewModelFactory private constructor(
             return LoginViewModel(repository as AuthRepository) as T
         if (modelClass.isAssignableFrom(RegisterViewModel::class.java))
             return RegisterViewModel(repository as AuthRepository) as T
+        if (modelClass.isAssignableFrom(SettingsViewModel::class.java))
+            return SettingsViewModel(repository as AuthRepository) as T
+        if (modelClass.isAssignableFrom(StoryListViewModel::class.java))
+            return StoryListViewModel(repository as StoryRepository) as T
 
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
@@ -29,11 +36,22 @@ class ViewModelFactory private constructor(
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(context: Context): ViewModelFactory {
-            val repository = Injection.provideInjection(context)
-            return instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(repository)
-            }.also { instance = it }
+        fun getAuthInstance(context: Context): ViewModelFactory {
+            if (instance == null || instance!!.repository !is AuthRepository) {
+                val repository = Injection.provideAuthInjection(context)
+                instance = ViewModelFactory(repository)
+            }
+
+            return instance as ViewModelFactory
+        }
+
+        fun getStoryInstance(): ViewModelFactory {
+            if (instance == null || instance!!.repository !is StoryRepository) {
+                val repository = Injection.provideStoryInjection()
+                instance = ViewModelFactory(repository)
+            }
+
+            return instance as ViewModelFactory
         }
     }
 }

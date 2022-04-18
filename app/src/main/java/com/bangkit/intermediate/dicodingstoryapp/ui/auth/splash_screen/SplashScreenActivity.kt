@@ -26,7 +26,7 @@ class SplashScreenActivity : BaseActivity() {
     override fun setupView(viewBinding: Any) {}
 
     override fun setupViewModel() {
-        val factory = ViewModelFactory.getInstance(this)
+        val factory = ViewModelFactory.getAuthInstance(this)
         val viewModel: SplashScreenViewModel by viewModels { factory }
         this.viewModel = viewModel
     }

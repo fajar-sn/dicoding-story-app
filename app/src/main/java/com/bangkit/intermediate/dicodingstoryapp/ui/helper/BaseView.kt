@@ -1,6 +1,5 @@
 package com.bangkit.intermediate.dicodingstoryapp.ui.helper
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -19,21 +18,6 @@ interface BaseView {
 }
 
 object ViewHelper {
-    fun showLoading(button: Button, progressBar: ProgressBar) {
-        button.isEnabled = false
-        progressBar.visibility = View.VISIBLE
-    }
-
-    fun finishLoading(button: Button, progressBar: ProgressBar) {
-        button.isEnabled = true
-        progressBar.visibility = View.GONE
-    }
-
-    fun showError(context: Context, button: Button, progressBar: ProgressBar, message: String) {
-        finishLoading(button, progressBar)
-        Toast.makeText(context, "Something went wrong. $message", Toast.LENGTH_SHORT).show()
-    }
-
     fun addTextChangeListener(callback: () -> Unit) = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -47,14 +31,20 @@ object ViewHelper {
 abstract class BaseActivity : AppCompatActivity(), BaseView {
     protected lateinit var viewModel: ViewModel
 
-    protected fun showLoading(button: Button, progressBar: ProgressBar) =
-        ViewHelper.showLoading(button, progressBar)
+    protected fun showLoading(button: Button, progressBar: ProgressBar) {
+        button.isEnabled = false
+        progressBar.visibility = View.VISIBLE
+    }
 
-    protected fun finishLoading(button: Button, progressBar: ProgressBar) =
-        ViewHelper.finishLoading(button, progressBar)
+    protected fun finishLoading(button: Button, progressBar: ProgressBar) {
+        button.isEnabled = true
+        progressBar.visibility = View.GONE
+    }
 
-    protected fun showError(button: Button, progressBar: ProgressBar, message: String) =
-        ViewHelper.showError(this, button, progressBar, message)
+    protected fun showError(button: Button, progressBar: ProgressBar, message: String) {
+        finishLoading(button, progressBar)
+        Toast.makeText(this, "Something went wrong. $message", Toast.LENGTH_SHORT).show()
+    }
 }
 
 abstract class BaseFragment : Fragment(), BaseView {
@@ -62,12 +52,9 @@ abstract class BaseFragment : Fragment(), BaseView {
     protected var viewBinding: ViewBinding? = null
     protected val binding get() = viewBinding!!
 
-    protected fun showLoading(button: Button, progressBar: ProgressBar) =
-        ViewHelper.showLoading(button, progressBar)
-
-    protected fun finishLoading(button: Button, progressBar: ProgressBar) =
-        ViewHelper.finishLoading(button, progressBar)
-
-    protected fun showError(button: Button, progressBar: ProgressBar, message: String) =
-        ViewHelper.showError(requireActivity(), button, progressBar, message)
+    protected fun showError(progressBar: ProgressBar, message: String) {
+        progressBar.visibility = View.GONE
+        Toast.makeText(requireContext(), "Something went wrong. $message", Toast.LENGTH_SHORT)
+            .show()
+    }
 }

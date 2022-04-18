@@ -37,7 +37,7 @@ class SettingsFragment : BaseFragment() {
     override fun setupView(viewBinding: Any) {}
 
     override fun setupViewModel() {
-        val factory = ViewModelFactory.getInstance(requireContext())
+        val factory = ViewModelFactory.getAuthInstance(requireContext())
         val viewModel: SettingsViewModel by viewModels { factory }
         this.viewModel = viewModel
     }

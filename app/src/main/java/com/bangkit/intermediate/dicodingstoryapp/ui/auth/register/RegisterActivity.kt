@@ -46,7 +46,7 @@ class RegisterActivity : BaseActivity() {
     }
 
     override fun setupViewModel() {
-        val factory = ViewModelFactory.getInstance(this)
+        val factory = ViewModelFactory.getAuthInstance(this)
         val viewModel: RegisterViewModel by viewModels { factory }
         this.viewModel = viewModel
     }

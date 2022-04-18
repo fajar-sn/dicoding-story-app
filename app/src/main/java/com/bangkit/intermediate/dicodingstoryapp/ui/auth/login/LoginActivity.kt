@@ -2,8 +2,6 @@ package com.bangkit.intermediate.dicodingstoryapp.ui.auth.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -20,7 +18,6 @@ import com.bangkit.intermediate.dicodingstoryapp.ui.helper.FormValidator
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewHelper
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
 import com.bangkit.intermediate.dicodingstoryapp.ui.story_list.StoryListActivity
-
 
 class LoginActivity : BaseActivity() {
     private lateinit var emailEditText: CustomEmailEditText
@@ -61,7 +58,7 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupViewModel() {
-        val factory = ViewModelFactory.getInstance(this)
+        val factory = ViewModelFactory.getAuthInstance(this)
         val viewModel: LoginViewModel by viewModels { factory }
         this.viewModel = viewModel
     }

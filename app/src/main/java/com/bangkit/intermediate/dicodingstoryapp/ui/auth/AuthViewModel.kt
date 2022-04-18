@@ -1,6 +1,7 @@
 package com.bangkit.intermediate.dicodingstoryapp.ui.auth
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.LoginRequest
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.RegisterRequest
@@ -10,7 +11,7 @@ import kotlinx.coroutines.launch
 open class AuthViewModel : ViewModel()
 
 class SplashScreenViewModel(private val repository: AuthRepository) : AuthViewModel() {
-    fun getUserToken() = repository.getUserToken()
+    fun getUserToken() = repository.getUserToken().asLiveData()
 }
 
 class RegisterViewModel(private val repository: AuthRepository) : AuthViewModel() {
