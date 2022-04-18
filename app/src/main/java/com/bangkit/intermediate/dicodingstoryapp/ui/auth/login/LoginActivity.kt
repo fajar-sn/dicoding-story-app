@@ -17,7 +17,7 @@ import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.FormValidator
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewHelper
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
-import com.bangkit.intermediate.dicodingstoryapp.ui.story_list.StoryListActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list.StoryListActivity
 
 class LoginActivity : BaseActivity() {
     private lateinit var emailEditText: CustomEmailEditText

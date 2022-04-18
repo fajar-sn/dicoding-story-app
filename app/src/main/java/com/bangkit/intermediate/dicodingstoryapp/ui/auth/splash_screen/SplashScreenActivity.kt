@@ -9,7 +9,7 @@ import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SplashScreenViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.login.LoginActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
-import com.bangkit.intermediate.dicodingstoryapp.ui.story_list.StoryListActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list.StoryListActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

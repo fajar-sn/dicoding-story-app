@@ -11,7 +11,7 @@ import com.bangkit.intermediate.dicodingstoryapp.ui.auth.LoginViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.RegisterViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SettingsViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SplashScreenViewModel
-import com.bangkit.intermediate.dicodingstoryapp.ui.story_list.StoryListViewModel
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list.StoryListViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(

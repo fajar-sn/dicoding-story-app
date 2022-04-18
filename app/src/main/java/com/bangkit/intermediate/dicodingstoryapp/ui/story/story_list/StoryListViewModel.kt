@@ -1,4 +1,4 @@
-package com.bangkit.intermediate.dicodingstoryapp.ui.story_list
+package com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData

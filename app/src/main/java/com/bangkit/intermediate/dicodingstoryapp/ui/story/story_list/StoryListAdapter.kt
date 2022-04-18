@@ -1,13 +1,18 @@
-package com.bangkit.intermediate.dicodingstoryapp.ui.story_list
+package com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list
 
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.intermediate.dicodingstoryapp.R
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.response.Story
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ItemRowStoryBinding
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.detail.StoryDetailActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -36,7 +41,19 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder
                 .apply(requestOptions)
                 .into(binding.imageViewStory)
 
-            itemView.setOnClickListener {}
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, StoryDetailActivity::class.java)
+                intent.putExtra("Story", story)
+
+                val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    itemView.context as Activity,
+                    Pair(binding.imageViewStory, "profile"),
+                    Pair(binding.textViewStoryName, "name"),
+                    Pair(binding.textViewStoryBody, "story")
+                )
+
+                itemView.context.startActivity(intent, optionsCompat.toBundle())
+            }
         }
     }
 
