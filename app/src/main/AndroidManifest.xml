@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bangkit.intermediate.dicodingstoryapp" >
+    package="com.bangkit.intermediate.dicodingstoryapp">
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,7 +12,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DicodingStoryApp" >
+        android:theme="@style/Theme.DicodingStoryApp">
+        <activity
+            android:name=".ui.story.camera.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.story.add_story.AddStoryActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.story.detail.StoryDetailActivity"
             android:exported="false" />
@@ -29,7 +37,7 @@
         <activity
             android:name=".ui.auth.splash_screen.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.SplashScreen" >
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,14 +11,19 @@
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.101" />
         <entry key="app/src/main/res/drawable/ic_baseline_vpn_key_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_broken_image_black.xml" value="0.1085" />
+        <entry key="app/src/main/res/drawable/ic_capture.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_error.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.101" />
         <entry key="app/src/main/res/drawable/ic_loading.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable/ic_new_launcher.xml" value="0.101" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_place_holder.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_switch_camera.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.154" />
+        <entry key="app/src/main/res/layout/activity_add_story.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.12411347517730496" />
         <entry key="app/src/main/res/layout/activity_dummt.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_dummy.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />

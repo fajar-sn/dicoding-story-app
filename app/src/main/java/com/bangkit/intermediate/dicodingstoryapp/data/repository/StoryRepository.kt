@@ -8,16 +8,11 @@ import java.net.SocketException
 
 class StoryRepository private constructor(private val apiService: ApiService) : BaseRepository() {
     fun getStories(token: String) = liveData {
-        Log.e("TAG", "NOT LOADING")
         emit(Result.Loading)
-        Log.e("TAG", "LOADING")
 
         try {
-            Log.e("TAG", "GETTING STORY")
             val response = apiService.getStories("Bearer $token")
-            Log.e("TAG", "RESPONSE $response")
             val stories = response.story
-            Log.e("TAG", "STORY $stories")
             emit(Result.Success(stories))
         } catch (e: Exception) {
             if (e is SocketException) {

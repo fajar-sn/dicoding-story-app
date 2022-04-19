@@ -1,5 +1,6 @@
 package com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import com.bangkit.intermediate.dicodingstoryapp.data.repository.Result
 import com.bangkit.intermediate.dicodingstoryapp.databinding.FragmentStoryListBinding
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseFragment
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.add_story.AddStoryActivity
 
 class StoryListFragment : BaseFragment() {
     override fun onCreateView(
@@ -69,12 +71,15 @@ class StoryListFragment : BaseFragment() {
                 is Result.Success -> {
                     progressBar.visibility = View.GONE
                     val storiesData = result.data
-                    Log.e("TAG", "DATA $storiesData")
                     storyAdapter.submitList(storiesData)
                 }
             }
         }
     }
 
-    override fun setupAction() {}
+    override fun setupAction() =
+        (binding as FragmentStoryListBinding).floatingActionButton.setOnClickListener {
+            val intent = Intent(requireContext(), AddStoryActivity::class.java)
+            startActivity(intent)
+        }
 }
