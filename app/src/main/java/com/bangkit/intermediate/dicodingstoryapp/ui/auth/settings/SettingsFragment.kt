@@ -9,24 +9,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import com.bangkit.intermediate.dicodingstoryapp.R
 import com.bangkit.intermediate.dicodingstoryapp.databinding.FragmentSettingsBinding
-import com.bangkit.intermediate.dicodingstoryapp.ui.auth.LoginViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SettingsViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.login.LoginActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseFragment
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
 
 class SettingsFragment : BaseFragment() {
-    // This property is only valid between onCreateView and onDestroyView.
-    private var _binding: FragmentSettingsBinding? = null
-
-    private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,19 +31,19 @@ class SettingsFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        viewBinding = null
     }
 
     override fun setupView(viewBinding: Any) {}
 
     override fun setupViewModel() {
-        val factory = ViewModelFactory.getInstance(requireContext())
-        val viewModel: LoginViewModel by viewModels { factory }
+        val factory = ViewModelFactory.getAuthInstance(requireContext())
+        val viewModel: SettingsViewModel by viewModels { factory }
         this.viewModel = viewModel
     }
 
     override fun setupAction() {
-        binding.logoutButton.setOnClickListener {
+        (binding as FragmentSettingsBinding).logoutButton.setOnClickListener {
             val alertDialogBuilder = AlertDialog.Builder(requireActivity())
             alertDialogBuilder.setMessage(R.string.are_you_sure)
             alertDialogBuilder.setNegativeButton(R.string.no) { _, _ -> }

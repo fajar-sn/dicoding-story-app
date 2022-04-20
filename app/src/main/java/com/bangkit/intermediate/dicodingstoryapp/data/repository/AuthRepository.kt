@@ -1,7 +1,6 @@
 package com.bangkit.intermediate.dicodingstoryapp.data.repository
 
 import android.util.Log
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.bangkit.intermediate.dicodingstoryapp.data.local.UserPreferences
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.LoginRequest
@@ -11,7 +10,7 @@ import retrofit2.HttpException
 
 class AuthRepository private constructor(
     private val apiService: ApiService,
-    private val preferences: UserPreferences
+    private val preferences: UserPreferences,
 ) : BaseRepository() {
     fun register(request: RegisterRequest) = liveData {
         emit(Result.Loading)
@@ -38,16 +37,19 @@ class AuthRepository private constructor(
         }
     }
 
-    fun getUserToken() = preferences.getUserToken().asLiveData()
+    fun getUserToken() = preferences.getUserToken()
 
-    suspend fun saveUserToken(token: String) { preferences.saveUserToken(token) }
+    suspend fun saveUserToken(token: String) {
+        preferences.saveUserToken(token)
+    }
 
     companion object {
         @Volatile
         private var instance: AuthRepository? = null
 
-        fun getInstance(apiService: ApiService, preferences: UserPreferences) : AuthRepository = instance ?: synchronized(this) {
-            instance ?: AuthRepository(apiService, preferences)
-        }.also { instance = it }
+        fun getInstance(apiService: ApiService, preferences: UserPreferences) =
+            instance ?: synchronized(this) {
+                instance ?: AuthRepository(apiService, preferences)
+            }.also { instance = it }
     }
 }

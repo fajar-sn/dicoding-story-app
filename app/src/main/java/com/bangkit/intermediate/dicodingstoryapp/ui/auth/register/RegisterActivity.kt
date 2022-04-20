@@ -12,6 +12,7 @@ import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.RegisterReq
 import com.bangkit.intermediate.dicodingstoryapp.data.repository.Result
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityRegisterBinding
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.RegisterViewModel
+import com.bangkit.intermediate.dicodingstoryapp.ui.auth.login.LoginActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomEmailEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.component.CustomPasswordEditText
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
@@ -24,11 +25,13 @@ class RegisterActivity : BaseActivity() {
     private lateinit var passwordEditText: CustomPasswordEditText
     private lateinit var registerButton: Button
     private lateinit var progressBar: ProgressBar
+    private var savedInstanceState: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.savedInstanceState = savedInstanceState
         setupView(binding)
         setupViewModel()
         setupAction()
@@ -43,10 +46,20 @@ class RegisterActivity : BaseActivity() {
         progressBar = binding.progressBar
         supportActionBar?.hide()
         setRegisterButtonEnable()
+
+        if (savedInstanceState != null) {
+            val savedInstanceState = savedInstanceState as Bundle
+            val emailText = savedInstanceState.getString(LoginActivity.STATE_EMAIL)
+            val passwordText = savedInstanceState.getString(LoginActivity.STATE_PASSWORD)
+            val nameText = savedInstanceState.getString(STATE_NAME)
+            if (emailText != null) emailEditText.setText("$emailText")
+            if (passwordText != null) passwordEditText.setText("$passwordText")
+            if (nameText != null) nameEditText.setText("$nameText")
+        }
     }
 
     override fun setupViewModel() {
-        val factory = ViewModelFactory.getInstance(this)
+        val factory = ViewModelFactory.getAuthInstance(this)
         val viewModel: RegisterViewModel by viewModels { factory }
         this.viewModel = viewModel
     }
@@ -115,5 +128,25 @@ class RegisterActivity : BaseActivity() {
                     password != null && password.toString()
                 .isNotEmpty() && FormValidator.validatePassword(
                 passwordEditText.toString())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val emailText = emailEditText.text
+        val passwordText = passwordEditText.text
+        val nameText = nameEditText.text
+
+        if (!(emailText.isNullOrBlank() || emailText.isNullOrEmpty()))
+            outState.putString(LoginActivity.STATE_EMAIL, "$emailText")
+
+        if (!(passwordText.isNullOrBlank() || passwordText.isNullOrEmpty()))
+            outState.putString(LoginActivity.STATE_PASSWORD, "$passwordText")
+
+        if (!(nameText.isNullOrBlank() || nameText.isNullOrEmpty()))
+            outState.putString(STATE_NAME, "$nameText")
+    }
+
+    companion object {
+        private const val STATE_NAME = "state_name"
     }
 }

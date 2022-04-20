@@ -15,4 +15,15 @@
     <string name="logout">Logout</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="add_new_story">Add new story</string>
+    <string name="story_picture">Story picture</string>
+    <string name="title">Title</string>
+    <string name="story">Story</string>
+    <string name="image_view_of_story">Image View of Story</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="description">Description</string>
+    <string name="upload">Upload</string>
+    <string name="shutter_button">Shutter button</string>
+    <string name="switch_camera">Switch camera</string>
 </resources>
