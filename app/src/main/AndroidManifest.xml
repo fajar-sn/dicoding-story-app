@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bangkit.intermediate.dicodingstoryapp">
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +14,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingStoryApp">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".ui.story.camera.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.story.add_story.AddStoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.story.detail.StoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.settings.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.story.story_list.StoryListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.splash_screen.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
