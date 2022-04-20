@@ -33,6 +33,7 @@
         <entry key="app/src/main/res/layout/activity_story_detail.xml" value="0.12411347517730496" />
         <entry key="app/src/main/res/layout/activity_story_list.xml" value="0.12411347517730496" />
         <entry key="app/src/main/res/layout/content_dummt.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_add_story.xml" value="0.12411347517730496" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_story_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_row_story.xml" value="0.1" />

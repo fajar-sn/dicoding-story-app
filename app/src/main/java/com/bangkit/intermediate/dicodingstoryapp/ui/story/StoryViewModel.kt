@@ -1,16 +1,17 @@
-package com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list
+package com.bangkit.intermediate.dicodingstoryapp.ui.story
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.AddStoryRequest
 import com.bangkit.intermediate.dicodingstoryapp.data.repository.StoryRepository
 import com.bangkit.intermediate.dicodingstoryapp.di.Injection
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class StoryListViewModel(private val repository: StoryRepository) : ViewModel() {
-    private val token = MutableLiveData<String>()
+open class StoryViewModel : ViewModel() {
+    protected val token = MutableLiveData<String>()
 
     fun getToken(context: Context) {
         val authRepository = Injection.provideAuthInjection(context)
@@ -22,6 +23,13 @@ class StoryListViewModel(private val repository: StoryRepository) : ViewModel() 
             }
         }
     }
+}
 
+class StoryListViewModel(private val repository: StoryRepository) : StoryViewModel() {
     fun getStories() = token.value?.let { repository.getStories(it) }
+}
+
+class AddStoryViewModel(private val repository: StoryRepository) : StoryViewModel() {
+    fun addNewStory(request: AddStoryRequest) =
+        token.value?.let { repository.addNewStory(it, request) }
 }

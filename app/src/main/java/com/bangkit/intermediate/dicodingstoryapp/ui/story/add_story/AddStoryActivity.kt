@@ -13,6 +13,7 @@ class AddStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
         if (savedInstanceState != null) return
         setupView()
+        supportActionBar?.title = "Add New Story"
     }
 
     private fun setupView() {

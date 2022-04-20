@@ -25,11 +25,13 @@ class LoginActivity : BaseActivity() {
     private lateinit var loginButton: Button
     private lateinit var registerTextView: TextView
     private lateinit var progressBar: ProgressBar
+    private var savedInstanceState: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.savedInstanceState = savedInstanceState
         setupView(binding)
         setupViewModel()
         setupAction()
@@ -44,6 +46,14 @@ class LoginActivity : BaseActivity() {
         progressBar = binding.loginProgressBar
         setLoginButtonEnable()
         supportActionBar?.hide()
+
+        if (savedInstanceState != null) {
+            val savedInstanceState = savedInstanceState as Bundle
+            val emailText = savedInstanceState.getString(STATE_EMAIL)
+            val passwordText = savedInstanceState.getString(STATE_PASSWORD)
+            if (emailText != null) emailEditText.setText("$emailText")
+            if (passwordText != null) passwordEditText.setText("$passwordText")
+        }
     }
 
     private fun setLoginButtonEnable() {
@@ -95,5 +105,22 @@ class LoginActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val emailText = emailEditText.text
+        val passwordText = passwordEditText.text
+
+        if (!(emailText.isNullOrBlank() || emailText.isNullOrEmpty()))
+            outState.putString(STATE_EMAIL, "$emailText")
+
+        if (!(passwordText.isNullOrBlank() || passwordText.isNullOrEmpty()))
+            outState.putString(STATE_PASSWORD, "$passwordText")
+    }
+
+    companion object {
+        internal const val STATE_EMAIL = "state_email"
+        internal const val STATE_PASSWORD = "state_password"
     }
 }
