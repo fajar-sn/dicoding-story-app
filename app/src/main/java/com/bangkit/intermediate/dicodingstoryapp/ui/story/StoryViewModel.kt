@@ -1,7 +1,6 @@
 package com.bangkit.intermediate.dicodingstoryapp.ui.story
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,6 @@ import androidx.paging.cachedIn
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.AddStoryRequest
 import com.bangkit.intermediate.dicodingstoryapp.data.repository.StoryRepository
 import com.bangkit.intermediate.dicodingstoryapp.di.Injection
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 open class StoryViewModel : ViewModel() {
