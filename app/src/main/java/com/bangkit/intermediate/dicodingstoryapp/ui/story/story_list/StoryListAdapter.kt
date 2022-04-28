@@ -43,7 +43,7 @@ class StoryListAdapter : ListAdapter<Story, StoryListAdapter.StoryListViewHolder
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, StoryDetailActivity::class.java)
-                intent.putExtra("Story", story)
+                intent.putExtra(StoryDetailActivity.EXTRA_STORY, story)
 
                 val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     itemView.context as Activity,
