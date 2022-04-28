@@ -3,7 +3,6 @@ package com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.intermediate.dicodingstoryapp.data.repository.Result
 import com.bangkit.intermediate.dicodingstoryapp.databinding.FragmentStoryListBinding
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseFragment
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
@@ -54,7 +52,6 @@ class StoryListFragment : BaseFragment() {
 
     override fun setupView(viewBinding: Any) {
         val binding = binding as FragmentStoryListBinding
-        val progressBar = binding.progressBarStoryList
         val recyclerViewStory = binding.recyclerViewStory
         recyclerViewStory.setHasFixedSize(true)
         val orientation = requireActivity().applicationContext.resources.configuration.orientation
@@ -66,23 +63,16 @@ class StoryListFragment : BaseFragment() {
         }
 
         val storyAdapter = StoryListAdapter()
-        recyclerViewStory.adapter = storyAdapter
+
+        recyclerViewStory.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter { storyAdapter.retry() }
+        )
+
         val viewModel = viewModel as StoryListViewModel
         viewModel.getToken(requireContext())
 
-        viewModel.getStories()?.observe(requireActivity()) { result ->
-            if (result == null) return@observe
-
-            when (result) {
-                is Result.Loading -> progressBar.visibility = View.VISIBLE
-                is Result.Error -> showError(progressBar, result.error)
-                is Result.Success -> {
-                    progressBar.visibility = View.GONE
-                    val storiesData = result.data
-                    storyAdapter.submitList(storiesData)
-                }
-            }
-        }
+        viewModel.getStories()
+            ?.observe(requireActivity()) { storyAdapter.submitData(lifecycle, it) }
     }
 
     override fun setupAction() =
