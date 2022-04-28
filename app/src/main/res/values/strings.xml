@@ -26,4 +26,6 @@
     <string name="upload">Upload</string>
     <string name="shutter_button">Shutter button</string>
     <string name="switch_camera">Switch camera</string>
+    <string name="title_activity_story_location">StoryLocationActivity</string>
+    <string name="open_location_on_map">Open location on map</string>
 </resources>
