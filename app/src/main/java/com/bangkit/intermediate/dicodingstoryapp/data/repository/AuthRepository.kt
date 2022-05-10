@@ -1,6 +1,5 @@
 package com.bangkit.intermediate.dicodingstoryapp.data.repository
 
-import android.util.Log
 import androidx.lifecycle.liveData
 import com.bangkit.intermediate.dicodingstoryapp.data.local.UserPreferences
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.LoginRequest
@@ -20,7 +19,6 @@ class AuthRepository private constructor(
             if (!response.error) emit(Result.Success(response))
             else emit(Result.Error(response.message))
         } catch (e: Exception) {
-            Log.e("AuthRepository", "register: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -32,8 +30,7 @@ class AuthRepository private constructor(
             val response = apiService.login(request.email, request.password)
             emit(Result.Success(response.loginResult))
         } catch (e: Exception) {
-            Log.e("AuthRepository", "login: ${(e as HttpException).message}")
-            emit(Result.Error(e.message()))
+            emit(Result.Error((e as HttpException).message()))
         }
     }
 

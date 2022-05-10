@@ -1,30 +1,19 @@
 package com.bangkit.intermediate.dicodingstoryapp.data.repository
 
-import android.util.Log
 import androidx.lifecycle.liveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.request.AddStoryRequest
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.retrofit.ApiService
 import retrofit2.HttpException
 import java.net.SocketException
 
 class StoryRepository private constructor(private val apiService: ApiService) : BaseRepository() {
-    fun getStories(token: String) = liveData {
-        emit(Result.Loading)
-
-        try {
-            val response = apiService.getStories("Bearer $token")
-            val stories = response.story
-            emit(Result.Success(stories))
-        } catch (e: Exception) {
-            if (e is SocketException) {
-                Log.e("StoryRepository", "getStories: ${e.message}")
-                emit(e.message?.let { Result.Error(it) })
-            } else {
-                Log.e("StoryRepository", "getStories: ${(e as HttpException).message}")
-                emit(Result.Error(e.message()))
-            }
-        }
-    }
+    fun getStories(token: String) = Pager(
+        config = PagingConfig(pageSize = 2),
+        pagingSourceFactory = { StoryPagingSource(apiService, token) }
+    ).liveData
 
     fun addNewStory(token: String, request: AddStoryRequest) = liveData {
         emit(Result.Loading)
@@ -39,11 +28,9 @@ class StoryRepository private constructor(private val apiService: ApiService) : 
                 emit(Result.Error(response.message))
         } catch (e: Exception) {
             if (e is SocketException) {
-                Log.e("StoryRepository", "addNewStory: ${e.message}")
                 emit(e.message?.let { Result.Error(it) })
             } else {
-                Log.e("StoryRepository", "addNewStory: ${(e as HttpException).message}")
-                emit(Result.Error(e.message()))
+                emit(Result.Error((e as HttpException).message()))
             }
         }
     }

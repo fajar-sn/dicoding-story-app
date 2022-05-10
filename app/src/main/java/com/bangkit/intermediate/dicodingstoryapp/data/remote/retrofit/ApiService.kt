@@ -24,7 +24,12 @@ interface ApiService {
     ): LoginResponse
 
     @GET("stories")
-    suspend fun getStories(@Header("Authorization") authorization: String): StoryListResponse
+    suspend fun getStories(
+        @Header("Authorization") authorization: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("location") location: Int = 1,
+    ): StoryListResponse
 
     @Multipart
     @POST("stories")

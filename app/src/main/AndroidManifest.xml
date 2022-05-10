@@ -3,6 +3,7 @@
     package="com.bangkit.intermediate.dicodingstoryapp">
 
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,6 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingStoryApp">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyApNoDjpMSiYFhZ36x3c87RijXb2TJ3DDA" />
+
+        <activity
+            android:name=".ui.story.map.StoryLocationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_story_location" />
         <activity
             android:name=".ui.story.camera.CameraActivity"
             android:exported="false" />
