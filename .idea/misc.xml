@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/layout/fragment_add_story.xml" value="0.12411347517730496" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_story_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_loading.xml" value="0.1697061803444782" />
         <entry key="app/src/main/res/layout/item_row_story.xml" value="0.1" />
         <entry key="app/src/main/res/layout/settings_activity.xml" value="0.1" />
         <entry key="app/src/main/res/menu/option_menu.xml" value="0.16944444444444445" />
