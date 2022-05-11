@@ -3,6 +3,7 @@ package com.bangkit.intermediate.dicodingstoryapp.ui.story.story_list
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ class StoryListFragment : BaseFragment() {
     private val launcherIntentAddStory =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode != ADD_STORY_RESULT) return@registerForActivityResult
-            val isSubmitted = it.data?.getBooleanExtra("isSubmitted", false) as Boolean
+            val isSubmitted = it.data?.getBooleanExtra(EXTRA_IS_SUBMITTED, false) as Boolean
             if (isSubmitted) setupView(binding)
         }
 
@@ -51,6 +52,7 @@ class StoryListFragment : BaseFragment() {
     }
 
     override fun setupView(viewBinding: Any) {
+        Log.e("TAG", "SETTING UP VIEWWWWWWWW")
         val binding = binding as FragmentStoryListBinding
         val recyclerViewStory = binding.recyclerViewStory
         recyclerViewStory.setHasFixedSize(true)
@@ -83,5 +85,6 @@ class StoryListFragment : BaseFragment() {
 
     companion object {
         const val ADD_STORY_RESULT = 200
+        const val EXTRA_IS_SUBMITTED = "EXTRA_IS_SUBMITTED"
     }
 }

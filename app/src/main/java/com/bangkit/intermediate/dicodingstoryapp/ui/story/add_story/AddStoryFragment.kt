@@ -240,7 +240,7 @@ class AddStoryFragment : BaseFragment() {
                     is Result.Success -> {
                         Toast.makeText(requireContext(), result.data, Toast.LENGTH_SHORT).show()
                         val intent = Intent()
-                        intent.putExtra("isSubmitted", true)
+                        intent.putExtra(StoryListFragment.EXTRA_IS_SUBMITTED, true)
                         activity?.setResult(StoryListFragment.ADD_STORY_RESULT, intent)
                         activity?.finish()
                     }

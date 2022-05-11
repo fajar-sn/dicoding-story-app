@@ -29,4 +29,5 @@
     <string name="title_activity_story_location">StoryLocationActivity</string>
     <string name="open_location_on_map">Open location on map</string>
     <string name="retry">Retry</string>
+    <string name="stories_location">Stories Location</string>
 </resources>

@@ -4,9 +4,15 @@ import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
 import com.bangkit.intermediate.dicodingstoryapp.R
 import com.bangkit.intermediate.dicodingstoryapp.data.remote.response.Story
+import com.bangkit.intermediate.dicodingstoryapp.data.repository.Result
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityStoryLocationBinding
+import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.helper.ViewModelFactory
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.StoryLocationViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.story.detail.StoryDetailActivity
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,7 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 
-class StoryLocationActivity : AppCompatActivity(), OnMapReadyCallback {
+class StoryLocationActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityStoryLocationBinding
@@ -31,6 +37,7 @@ class StoryLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
+
         mapFragment.getMapAsync(this)
     }
 
@@ -45,20 +52,59 @@ class StoryLocationActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val story = intent.getParcelableExtra<Story>(StoryDetailActivity.EXTRA_STORY) as Story
-        Log.e(TAG, "DIS STORY $story")
 
         // Add a marker in Sydney and move the camera
-        val location = LatLng(story.latitude, story.longitude)
-        mMap.addMarker(MarkerOptions().position(location).title(story.name).snippet(story.description))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        setupViewModel()
+        setupView(binding)
+//        val location = LatLng(story.latitude, story.longitude)
+//        mMap.addMarker(MarkerOptions().position(location).title(story.name)
+//            .snippet(story.description))
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
 
         setMapStyle()
     }
 
+    override fun setupViewModel() {
+        val factory = ViewModelFactory.getStoryInstance()
+        val viewModel: StoryLocationViewModel by viewModels { factory }
+        this.viewModel = viewModel
+    }
+
+    override fun setupView(viewBinding: Any) {
+        val progressBar = binding.progressBarMap
+        val viewModel = viewModel as StoryLocationViewModel
+        viewModel.getToken(this)
+
+        viewModel.getStories()?.observe(this) { result ->
+            if (result == null) return@observe
+
+            when (result) {
+                Result.Loading -> progressBar.visibility = View.GONE
+                is Result.Error -> showError(progressBar, result.error)
+                is Result.Success -> {
+                    progressBar.visibility = View.GONE
+                    val storiesData = result.data
+
+                    storiesData.forEach { story ->
+                        val location = LatLng(story.latitude, story.longitude)
+                        mMap.addMarker(MarkerOptions().position(location).title(story.name)
+                            .snippet(story.description))
+                    }
+
+                    val firstStory = storiesData[0]
+                    val firstStoryLocation = LatLng(firstStory.latitude, firstStory.longitude)
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(firstStoryLocation))
+                }
+            }
+        }
+    }
+
+    override fun setupAction() {}
+
     private fun setMapStyle() {
         try {
-            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
             if (success) return
             Log.e(TAG, "Style parsing failed")
         } catch (exception: Resources.NotFoundException) {

@@ -4,4 +4,7 @@
     <item
         android:id="@+id/menu_settings"
         android:title="@string/settings" />
+    <item
+        android:id="@+id/menu_maps"
+        android:title="@string/stories_location" />
 </menu>
