@@ -33,3 +33,7 @@ class AddStoryViewModel(private val repository: StoryRepository) : StoryViewMode
     fun addNewStory(request: AddStoryRequest) =
         token.value?.let { repository.addNewStory(it, request) }
 }
+
+class StoryLocationViewModel(private val repository: StoryRepository) : StoryViewModel() {
+    fun getStories() = token.value?.let { repository.getLatestStories(it) }
+}

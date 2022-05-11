@@ -45,6 +45,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
         finishLoading(button, progressBar)
         Toast.makeText(this, "Something went wrong. $message", Toast.LENGTH_SHORT).show()
     }
+
+    protected fun showError(progressBar: ProgressBar, message: String) {
+        progressBar.visibility = View.GONE
+        Toast.makeText(this, "Something went wrong. $message", Toast.LENGTH_SHORT)
+            .show()
+    }
 }
 
 abstract class BaseFragment : Fragment(), BaseView {
