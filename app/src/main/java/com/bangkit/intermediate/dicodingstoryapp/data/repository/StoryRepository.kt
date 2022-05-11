@@ -22,16 +22,24 @@ class StoryRepository private constructor(private val apiService: ApiService) : 
             val response =
                 apiService.addNewStory("Bearer $token", request.imageMultipart, request.description)
 
-            if (!response.error)
-                emit(Result.Success(response.message))
-            else
-                emit(Result.Error(response.message))
+            if (!response.error) emit(Result.Success(response.message))
+            else emit(Result.Error(response.message))
         } catch (e: Exception) {
-            if (e is SocketException) {
-                emit(e.message?.let { Result.Error(it) })
-            } else {
-                emit(Result.Error((e as HttpException).message()))
-            }
+            if (e is SocketException) emit(e.message?.let { Result.Error(it) })
+            else emit(Result.Error((e as HttpException).message()))
+        }
+    }
+
+    fun getLatestStories(token: String) = liveData {
+        emit(Result.Loading)
+
+        try {
+            val response = apiService.getStories("Bearer $token")
+            if (!response.error) emit(Result.Success(response.story))
+            else emit(Result.Error(response.message))
+        } catch (e: Exception) {
+            if (e is SocketException) emit(e.message?.let { Result.Error(it) })
+            else emit(Result.Error((e as HttpException).message()))
         }
     }
 

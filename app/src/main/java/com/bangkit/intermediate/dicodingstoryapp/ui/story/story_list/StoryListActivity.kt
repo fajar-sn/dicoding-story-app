@@ -9,6 +9,7 @@ import com.bangkit.intermediate.dicodingstoryapp.R
 import com.bangkit.intermediate.dicodingstoryapp.databinding.ActivityBaseBinding
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.settings.SettingsActivity
 import com.bangkit.intermediate.dicodingstoryapp.ui.helper.BaseActivity
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.map.StoryLocationActivity
 
 class StoryListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +26,18 @@ class StoryListActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
-        if (item.itemId != R.id.menu_settings) false else {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            true
+        when (item.itemId) {
+            R.id.menu_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_maps -> {
+                val intent = Intent(this, StoryLocationActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> false
         }
 
     override fun setupView(viewBinding: Any) {

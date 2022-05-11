@@ -13,6 +13,7 @@ import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SettingsViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.auth.SplashScreenViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.story.AddStoryViewModel
 import com.bangkit.intermediate.dicodingstoryapp.ui.story.StoryListViewModel
+import com.bangkit.intermediate.dicodingstoryapp.ui.story.StoryLocationViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory private constructor(
@@ -31,6 +32,8 @@ class ViewModelFactory private constructor(
             return StoryListViewModel(repository as StoryRepository) as T
         if (modelClass.isAssignableFrom(AddStoryViewModel::class.java))
             return AddStoryViewModel(repository as StoryRepository) as T
+        if (modelClass.isAssignableFrom(StoryLocationViewModel::class.java))
+            return StoryLocationViewModel(repository as StoryRepository) as T
 
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
